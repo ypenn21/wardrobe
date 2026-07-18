@@ -17,6 +17,8 @@ This repository uses a clear architect–engineer division of labor to coordinat
 ### Delegating to Gemini
 For most routine engineering tasks, invoke Gemini CLI from the repository root in headless mode. Prefer the custom agent `gemini_engineer` when Codex subagent orchestration is available; otherwise call Gemini directly.
 
+Before delegating, inspect `.codex/agents/`. This repository defines the `gemini_engineer` custom agent in `.codex/agents/gemini-engineer.toml`; use its `name` field to select the agent. Invoke Gemini CLI directly only if the custom-agent spawn fails or the current Codex surface cannot select it, and explicitly report that fallback.
+
 For implementation/modification tasks, use:
 ```sh
 gemini --approval-mode auto_edit --output-format json -p "<bounded task prompt>"
