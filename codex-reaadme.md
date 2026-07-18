@@ -214,6 +214,21 @@ This repository already has:
 .agents/skills/import-clothes/
 ```
 
+### How these locations differ
+
+- `~/.codex/skills/feature-plan/` is a personal skill available across repositories. This is where `feature-plan` currently lives.
+- `.agents/skills/` contains project-owned skills that travel with this repository. Wardrobe's `import-clothes` and `generate-outfits` skills live here because they are tightly coupled to Wardrobe.
+- `.codex/agents/` contains project-scoped custom subagent definitions, such as `gemini_engineer`. These TOML files configure agent roles; they are not skills.
+- `.codex/config.toml` contains project-specific Codex settings rather than reusable skill instructions.
+
+`feature-plan` is Wardrobe-specific in its current form, so placing it globally is arguably not ideal. If it is intended only for this repository and should be version-controlled with it, the more appropriate location is:
+
+```text
+.agents/skills/feature-plan/SKILL.md
+```
+
+The global location makes sense only if the planning workflow should be available across multiple repositories. In that case, its Wardrobe-specific instructions should be generalized.
+
 Each skill must contain at least:
 
 ```text
