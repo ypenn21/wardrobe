@@ -101,7 +101,26 @@ The table below outlines cumulative costs based on standard and high-definition 
 
 ---
 
-### 3. Key Cost Optimization Strategies Implemented
+### 3. Standard vs. HD Quality: Key Operational Trade-offs
+
+Choosing between Standard and HD image quality involves several critical technical and user experience trade-offs beyond just the doubled price point:
+
+1. **Generation Latency (Wait Time):**
+   * **Standard:** Typically completes in **4 to 8 seconds**.
+   * **HD:** Requires a deeper, more detailed diffusion process, taking **12 to 25 seconds** per generation. Because our ingestion flow is an interactive multi-stage UI, selecting HD significantly increases the waiting states during both the *Cutout Gen* and *Modeled Shoot* stages.
+2. **Local Chroma-Key Matte Precision:**
+   * **Standard:** Can sometimes introduce faint edge compression artifacts and minor color-bleeding.
+   * **HD:** Renders crisp, precise outlines and cleaner transitions between the garment and the solid chroma background. This results in a cleaner matte cut from `sharp` with far fewer halos and less manual cleanup needed.
+3. **Texture Detail & Facial Preservation:**
+   * **Standard:** Tends to smooth out intricate textures (e.g., knit, stitching, weave pattern) and may warp face details in the modeling step.
+   * **HD:** Retains rich textile textures and achieves far higher fidelity when blending the user's face from the reference portrait in Stage 4.
+4. **Rate Limits & Batching:**
+   * **Standard:** More forgiving on OpenAI's Images API rate limits (requests/minute).
+   * **HD:** Tighter rate limits apply, meaning automated batch ingestion (e.g., via the `import-clothes` skill) must be carefully throttled to avoid throttling/429 errors.
+
+---
+
+### 4. Key Cost Optimization Strategies Implemented
 
 To keep running costs as low as possible, the Wardrobe pipeline employs three critical design choices:
 
